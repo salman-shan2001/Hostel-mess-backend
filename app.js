@@ -70,8 +70,6 @@ app.post("/SignIn",(req,res)=>{
 })
 
 
-
-
 //to view the server updates
 app.listen(5050, () => {
     console.log("server running successfuly")
