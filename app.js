@@ -37,18 +37,12 @@ app.post("/SignIn", (req, res) => {
                 let dbpassword = response[0].Password
                 console.log(dbpassword)
                 bcrypt.compare(input.Password, dbpassword, (error, isMatch) => {
-                    if (isMatch) {
-                        jwt.sign({ EmailId: input.EmailId }, "mess-app", { expiresIn: "1d" },
-                            (error, token) => {
-                                if (error) {
-                                    res.json({ "status": "unable to create token" })
-                                } else {
-                                    res.json({ "status": "success", "userid": response[0]._id, "token": token })
-                                }
-                            }
-                        )
-                    } else {
-                        res.json({ "status": "Incorrect" })
+                    if(isMatch) {
+                        res.json({"status": "success","userid":response[0]._id})
+                    }
+                    else
+                    {
+                        res.json({"status":"incorrect pw"})
                     }
                 })
             } else {
