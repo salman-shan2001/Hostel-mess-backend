@@ -4,6 +4,7 @@ const mongoose = require("mongoose")
 const cors = require("cors")
 const { MessModel } = require("./modules/mess")     // messmodule imported
 const bcryptjs=require("bcryptjs")
+const jwt = require("jsonwebtoken")
 
 //mongoose database link
 mongoose.connect("mongodb+srv://salmanshan:salman642001@cluster0.odxej1b.mongodb.net/StudentMessDB?retryWrites=true&w=majority&appName=Cluster0")
@@ -34,6 +35,41 @@ app.post("/SignUp", async(req, res) => {
     Mess.save()
     res.json({ "status": "success" })
 })
+
+app.post("/SignIn",(req,res)=>{
+    let input=req.body
+    MessModel.find({"EmailId":req.body.EmailId}).then(
+        (response)=>{
+           if (response.length>0) {
+            let dbPassword=response[0].Password
+            console.log(dbPassword)
+            bcryptjs.compare(input.Password,dbPassword,(error,isMatch)=>{
+                if (isMatch) {
+                    jwt.sign({ EmailId: input.EmailId }, "mess-app", { expiresIn: "1d" },
+                        (error, token) => {
+                            if (error) {
+                               res.json({ "status": "unable to create token" })
+                            } else {
+                                res.json({ "status": "success", "userid": response[0]._id, "token": token })
+                            }
+                        }
+                    )
+                } else {
+                    res.json({"status":"incorrect password"})
+                    
+                }
+            })
+
+           } else {
+            res.json({satus:"user not found"})
+            
+           }
+        }
+    ).catch()
+
+})
+
+
 
 
 //to view the server updates
