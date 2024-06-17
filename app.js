@@ -5,6 +5,7 @@ const cors = require("cors")
 const { MessModel } = require("./modules/mess")     // messmodule imported
 const bcryptjs=require("bcryptjs")
 const jwt = require("jsonwebtoken")
+const { StaffModel } = require("./modules/staff")
 
 //mongoose database link
 mongoose.connect("mongodb+srv://salmanshan:salman642001@cluster0.odxej1b.mongodb.net/StudentMessDB?retryWrites=true&w=majority&appName=Cluster0")
@@ -70,6 +71,18 @@ app.post("/SignIn",(req,res)=>{
 })
 
 
+
+//Staff Signup
+app.post("/StaffSignup",async(req,res)=>{
+   let input = req.body
+   let HashedPassword=await GenerateHashedPassword(input.StaffPassword)
+    console.log(HashedPassword)
+input.StaffPassword=HashedPassword
+const Staff=new StaffModel(input)
+Staff.save()
+    res.json({"status":"success"})
+    
+})
 
 
 //to view the server updates
