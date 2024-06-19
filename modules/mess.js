@@ -6,9 +6,7 @@ const Schema=mongoose.Schema(
         "AdmissionNumber":{type:String,require:true},
         "Department":{type:String,require:true},
         "EmailId":{type:String,require:true},
-        "Password":{type:String,require:true},
-        
-
+        "Password":{type:String,require:true}
     }
 )
 
