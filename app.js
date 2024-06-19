@@ -70,6 +70,24 @@ app.post("/SignIn",(req,res)=>{
 })
 
 
+// student profile view for admin
+app.post("/viewStudent",(req,res)=>{
+    let token = req.headers["token"]
+    jwt.verify(token,"mess-app",(decoded,error)=>{
+        if (error) {
+            res.json({"status":"unauthorized access"})
+        } else {
+            if (decoded) {
+                MessModel.find().then(
+                    (response)=>{
+                        res.json(response)
+                    }
+                ).catch()
+            }
+        }
+    })
+    
+})
 
 
 //to view the server updates
