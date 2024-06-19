@@ -37,7 +37,8 @@ app.post("/SignUp", async(req, res) => {
 })
 
 
-// creating SignUp API
+// creating Student SignIn API
+
 app.post("/SignIn",(req,res)=>{
     let input=req.body
     MessModel.find({"EmailId":req.body.EmailId}).then(
