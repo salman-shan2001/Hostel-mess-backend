@@ -36,7 +36,10 @@ app.post("/SignUp", async(req, res) => {
     res.json({ "status": "success" })
 })
 
+
+
 // creating Student SignIn API
+
 
 app.post("/SignIn",(req,res)=>{
     let input=req.body
