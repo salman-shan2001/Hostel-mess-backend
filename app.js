@@ -90,7 +90,7 @@ app.post("/viewStudent",(req,res)=>{
             }
         }
     })
-    
+
 })
 
 //Staff Signup
